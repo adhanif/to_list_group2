@@ -24,7 +24,7 @@ const renderToDoList = () => {
     // Create list item with todo text and buttons
     let listItem = document.createElement("li");
     listItem.className =
-      "list-group-item leftcon container bg-dark text-white py-3";
+      "list-group-item leftcon container bg-secondary text-white py-3";
     listItem.innerHTML = `
       <div class="d-flex justify-content-center align-items-center">
         <div class="col-2">
@@ -34,10 +34,10 @@ const renderToDoList = () => {
           <span>${todo.value}</span>
         </div>
         <div class="col-2 text-right edit-delete">
-          <button type="button" class="btn btn-primary btn-sm mr-2">
+          <button type="button" class="btn btn-primary btn-sm">
             <i class="fas fa-edit"></i>
           </button>
-          <button type="button" class="btn btn-danger btn-sm">
+          <button type="button" class="btn btn-danger btn-sm mx-2">
             <i class="fas fa-trash"></i>
           </button>
         </div>
