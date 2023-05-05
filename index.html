@@ -9,6 +9,8 @@
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
   <!--  -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <link rel="stylesheet" href="style.css" />
   <title>To do List</title>
@@ -20,8 +22,8 @@
       <h1 class="text-center text-white pb-3">To-Do List</h1>
       <div class="d-md-flex w-sm-50 justify-content-center">
         <div class="input-group mb-3 news-input">
-          <input id="to-do-input" type="text" class="form-control" placeholder="Enter the todo"
-            aria-label="Recipient's username" aria-describedby="button-addon2" />
+          <input id="to-do-input" type="text" class="form-control" placeholder="Enter your todo"
+            aria-describedby="button-addon2" required />
           <button class="btn btn-outline-secondary text-white" type="button" id="button-addon2">
             Add me
           </button>
@@ -32,7 +34,7 @@
 
   <!--  -->
   <section class="container-fluid">
-    <ul id="todo-list" class="text-center">
+    <ul id="todo-list" class="list-group text-center">
 
     </ul>
   </section>
