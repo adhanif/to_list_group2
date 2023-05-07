@@ -12,17 +12,19 @@ addButton.addEventListener("click", function () {
   }
 
   input.value = "";
-
+  saveDate();
   renderToDoList();
   //console.log(todos);
 });
 
 const renderToDoList = () => {
   let todoList = document.getElementById("todo-list");
-  saveDate();
-  while (todoList.firstChild) {
-    todoList.removeChild(todoList.firstChild);
+
+  while (todoList.firstElementChild) {
+    todoList.removeChild(todoList.firstElementChild);
+    saveDate();
   }
+
   //console.log(todoList);
 
   todos.forEach((todo, index) => {
@@ -68,11 +70,12 @@ const renderToDoList = () => {
     let deleteButton = listItem.querySelector(`#delete-${index}`);
     deleteButton.addEventListener("click", function (e) {
       e.target.closest("li").remove();
-      todos.splice("index", 1);
+      todos.splice(index, 1);
       saveDate();
     });
 
     todoList.appendChild(listItem);
+    saveDate();
   });
 };
 
