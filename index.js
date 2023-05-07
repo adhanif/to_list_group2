@@ -44,7 +44,7 @@ const renderToDoList = () => {
       <span>${todo.value}</span>
     </div>
     <div class="col-2 text-right edit-delete">
-      <button type="button" class="btn btn-primary btn-sm">
+      <button type="button" class="btn btn-primary btn-sm" id="edit-${index}">
         <i class="fas fa-edit"></i>
       </button>
       <button type="button" class="btn btn-danger btn-sm mx-2" id="delete-${index}">
@@ -55,7 +55,7 @@ const renderToDoList = () => {
 `;
 
     let checkbox = listItem.querySelector(`#checkbox-${index}`);
-    checkbox.checked = todo.completed;
+    checkbox.checked = todo.completed; //false
     checkbox.addEventListener("click", function () {
       todo.completed = this.checked;
       if (this.checked) {
@@ -72,6 +72,11 @@ const renderToDoList = () => {
       e.target.closest("li").remove();
       todos.splice(index, 1);
       saveDate();
+    });
+
+    let editButton = listItem.querySelector(`#edit-${index}`);
+    editButton.addEventListener("click", function (e) {
+      
     });
 
     todoList.appendChild(listItem);
