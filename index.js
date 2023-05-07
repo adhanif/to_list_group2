@@ -12,8 +12,10 @@ addButton.addEventListener("click", function () {
   }
 
   input.value = "";
+ 
 
   renderToDoList();
+  saveData()
   //console.log(todos);
 });
 
@@ -44,7 +46,7 @@ const renderToDoList = () => {
       <button type="button" class="btn btn-primary btn-sm">
         <i class="fas fa-edit"></i>
       </button>
-      <button type="button" class="btn btn-danger btn-sm mx-2">
+      <button type="button" class="btn btn-danger btn-sm mx-2" id="delete-${index}">
         <i class="fas fa-trash"></i>
       </button>
     </div>
@@ -62,6 +64,22 @@ const renderToDoList = () => {
       }
     });
 
+
+let deleteButton = listItem.querySelector(`#delete-${index}`);
+    deleteButton.addEventListener("click", function (e) {
+      e.target.closest("li").remove();
+      todos.splice("index", 1);    
+    });
+
     todoList.appendChild(listItem);
   });
 };
+
+function saveData(){
+  localStorage.setItem("data",  listItem.innerHTML);
+}
+
+function showTask(){
+  listItem.innerHTML = localStorage.getItem("data");
+}
+showTask();
