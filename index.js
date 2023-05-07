@@ -12,15 +12,14 @@ addButton.addEventListener("click", function () {
   }
 
   input.value = "";
- 
 
   renderToDoList();
-  saveData()
   //console.log(todos);
 });
 
 const renderToDoList = () => {
   let todoList = document.getElementById("todo-list");
+  saveDate();
   while (todoList.firstChild) {
     todoList.removeChild(todoList.firstChild);
   }
@@ -59,27 +58,34 @@ const renderToDoList = () => {
       todo.completed = this.checked;
       if (this.checked) {
         listItem.classList.add("completed");
+        saveDate();
       } else {
         listItem.classList.remove("completed");
+        saveDate();
       }
     });
 
-
-let deleteButton = listItem.querySelector(`#delete-${index}`);
+    let deleteButton = listItem.querySelector(`#delete-${index}`);
     deleteButton.addEventListener("click", function (e) {
       e.target.closest("li").remove();
-      todos.splice("index", 1);    
+      todos.splice("index", 1);
+      saveDate();
     });
 
     todoList.appendChild(listItem);
   });
 };
 
-function saveData(){
-  localStorage.setItem("data",  listItem.innerHTML);
+function saveDate() {
+  localStorage.setItem("todos", JSON.stringify(todos));
 }
 
-function showTask(){
-  listItem.innerHTML = localStorage.getItem("data");
+function getSavedData() {
+  let savedData = JSON.parse(localStorage.getItem("todos"));
+  if (savedData) {
+    todos.push(...savedData);
+    renderToDoList();
+  }
 }
-showTask();
+
+getSavedData();
