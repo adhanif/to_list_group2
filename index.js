@@ -78,6 +78,7 @@ const renderToDoList = () => {
     editButton.addEventListener("click", function (e) {
       let span = e.target.closest("li").querySelector("span");
       span.setAttribute("contenteditable", true);
+
       editButton.addEventListener("click", function (e) {
         span.setAttribute("contenteditable", false);
       });
