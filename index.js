@@ -75,15 +75,23 @@ const renderToDoList = () => {
     });
 
     let editButton = listItem.querySelector(`#edit-${index}`);
+    const tempValue = [];
     editButton.addEventListener("click", function (e) {
       let span = e.target.closest("li").querySelector("span");
+      tempValue.push(span.innerText);
       if (span.contentEditable === "false") {
         span.contentEditable = "true";
       } else {
-        span.onmouseout = function () {
-          span.contentEditable = "false";
-        };
+        span.contentEditable = "false";
       }
+      if (span.innerText === "") {
+        span.innerText = `${tempValue[0]}`;
+      }
+
+      console.log(span);
+      // span.onmouseout = function () {
+      //   span.contentEditable = "false";
+      // };
     });
 
     todoList.appendChild(listItem);
