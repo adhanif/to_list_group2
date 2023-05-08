@@ -41,7 +41,7 @@ const renderToDoList = () => {
       <input class="form-check-input" type="checkbox" value="" id="checkbox-${index}">
     </div>
     <div class="col-8">
-      <span >${todo.value}</span>
+      <span  contentEditable = "false">${todo.value}</span>
     </div>
     <div class="col-2 text-right edit-delete">
       <button type="button" class="btn btn-primary btn-sm" id="edit-${index}">
@@ -77,13 +77,13 @@ const renderToDoList = () => {
     let editButton = listItem.querySelector(`#edit-${index}`);
     editButton.addEventListener("click", function (e) {
       let span = e.target.closest("li").querySelector("span");
-      span.setAttribute("contenteditable", true);
-
-      editButton.addEventListener("click", function (e) {
-        span.setAttribute("contenteditable", false);
-      });
-      // span.remove("contenteditable");
-      console.log(span);
+      if (span.contentEditable === "false") {
+        span.contentEditable = "true";
+      } else {
+        span.onmouseout = function () {
+          span.contentEditable = "false";
+        };
+      }
     });
 
     todoList.appendChild(listItem);
