@@ -41,7 +41,7 @@ const renderToDoList = () => {
       <input class="form-check-input" type="checkbox" value="" id="checkbox-${index}">
     </div>
     <div class="col-8">
-      <span  contentEditable = "false">${todo.value}</span>
+      <input readonly value="${todo.value}" id="editInput" class="bg-secondary border-0 text-white">
     </div>
     <div class="col-2 text-right edit-delete">
       <button type="button" class="btn btn-primary btn-sm" id="edit-${index}">
@@ -77,18 +77,29 @@ const renderToDoList = () => {
     let editButton = listItem.querySelector(`#edit-${index}`);
     const tempValue = [];
     editButton.addEventListener("click", function (e) {
-      let span = e.target.closest("li").querySelector("span");
-      tempValue.push(span.innerText);
-      if (span.contentEditable === "false") {
-        span.contentEditable = "true";
-      } else {
-        span.contentEditable = "false";
-      }
-      if (span.innerText === "") {
-        span.innerText = `${tempValue[0]}`;
-      }
+      let inputEdit = e.target.closest("li").querySelector("#editInput");
 
-      console.log(span);
+      if (inputEdit.readonly) {
+        inputEdit.removeAttribute("readonly");
+      } else {
+        inputEdit.setAttribute("readonly", true);
+      }
+      console.log(inputEdit);
+      todos[index].value = inputEdit.value;
+
+      saveDate();
+      console.log(inputEdit);
+      // if (span.contentEditable === "false") {
+      //   span.contentEditable = "true";
+      // } else {
+      //   span.contentEditable = "false";
+      // }
+      // if (span.innerText === "") {
+      //   span.innerText = "Enter the new item";
+      // }
+      // todos[index].value = span.innerText;
+      // saveDate();
+      // console.log(span);
       // span.onmouseout = function () {
       //   span.contentEditable = "false";
       // };
