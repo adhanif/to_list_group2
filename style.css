@@ -9,15 +9,15 @@
   padding-right: 20%;
 }
 
-span {
+#editInput {
   font-size: 20px;
   min-width: 50px;
 }
 
-.list-group-item.completed span {
+#editInput.completed >input{
   color: rgb(66, 66, 66);
-  text-decoration: line-through;
-  text-decoration-color: rgb(50, 50, 50);
+  /* text-decoration: line-through;
+  text-decoration-color: rgb(50, 50, 50); */
 }
 
 @media(min-width: 768px){

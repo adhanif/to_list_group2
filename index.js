@@ -3,7 +3,7 @@ const addButton = document.querySelector("#button-addon2");
 
 const todos = [];
 
-addButton.addEventListener("click", function () {
+addButton.addEventListener("click", function (e) {
   const todoValue = input.value;
   let todoObject = { value: todoValue, completed: false };
 
@@ -12,8 +12,8 @@ addButton.addEventListener("click", function () {
   }
 
   input.value = "";
-  saveDate();
   renderToDoList();
+  saveDate();
   //console.log(todos);
 });
 
@@ -22,87 +22,101 @@ const renderToDoList = () => {
 
   while (todoList.firstElementChild) {
     todoList.removeChild(todoList.firstElementChild);
-    saveDate();
   }
 
   //console.log(todoList);
-
   todos.forEach((todo, index) => {
     // Create list item with todo text and buttons
     let listItem = document.createElement("li");
-    listItem.className =
-      "list-group-item leftcon container bg-secondary text-white py-3";
+    let todoCompleted = false;
+    listItem.className = "list-group-item leftcon container bg-secondary py-3";
     if (todo.completed) {
       listItem.classList.add("completed");
+      listItem.classList.remove("text-white");
+      todoCompleted = true;
     }
     listItem.innerHTML = `
     <div class="d-flex justify-content-center align-items-center">
     <div class="col-2">
-      <input class="form-check-input" type="checkbox" value="" id="checkbox-${index}">
+      <input id="checkbox-${index}" class="form-check-input" type="checkbox" value="" >
     </div>
     <div class="col-8">
-      <input readonly value="${todo.value}" id="editInput" class="bg-secondary border-0 text-white">
+      <input 
+      value="${
+        todo.value
+      }" id="editInput" class="bg-secondary border-0 text-center 
+      ${todoCompleted ? "done" : "text-white"}" readonly="true" disabled>
     </div>
     <div class="col-2 text-right edit-delete">
-      <button type="button" class="btn btn-primary btn-sm" id="edit-${index}">
-        <i class="fas fa-edit"></i>
+      <button id="edit-${index}" type="button" class="btn btn-primary btn-sm" >
+        <i id="editIcon" class="fas fa-edit"></i>
       </button>
-      <button type="button" class="btn btn-danger btn-sm mx-2" id="delete-${index}">
+      <button id="delete-${index}" type="button" class="btn btn-danger btn-sm mx-2" >
         <i class="fas fa-trash"></i>
       </button>
     </div>
-  </div>
-`;
+    </div>
+    `;
 
     let checkbox = listItem.querySelector(`#checkbox-${index}`);
     checkbox.checked = todo.completed; //false
-    checkbox.addEventListener("click", function () {
+    checkbox.addEventListener("click", function (e) {
       todo.completed = this.checked;
+      let todoInput = e.target.closest("li").querySelector("#editInput");
+      // console.log(todoInput);
       if (this.checked) {
-        listItem.classList.add("completed");
+        todoInput.classList.add("completed");
+        todoInput.classList.remove("text-white");
         saveDate();
       } else {
-        listItem.classList.remove("completed");
+        todoInput.classList.remove("completed");
+        todoInput.classList.add("text-white");
         saveDate();
       }
     });
 
     let deleteButton = listItem.querySelector(`#delete-${index}`);
     deleteButton.addEventListener("click", function (e) {
+      // console.log(deleteButton);
+      // if (
+      //   confirm(
+      //     `Are you sure you want to delete this ${todos[index].value} todo?`
+      //   )
+      // ) {
+      todos.splice("index", 1);
       e.target.closest("li").remove();
-      todos.splice(index, 1);
       saveDate();
+      // } else {
+      //   saveDate();
+      // }
     });
 
     let editButton = listItem.querySelector(`#edit-${index}`);
-    const tempValue = [];
     editButton.addEventListener("click", function (e) {
       let inputEdit = e.target.closest("li").querySelector("#editInput");
-
-      if (inputEdit.readonly) {
-        inputEdit.removeAttribute("readonly");
+      let editButtonIcon = e.target.closest("li i");
+      // console.log(inputEdit);
+      if (inputEdit.getAttribute("readonly")) {
+        editButton.focus();
+        editButtonIcon.setAttribute("class", "fas fa-check");
+        editButton.classList.add("btn-success");
+        editButton.classList.remove("btn-primary");
+        inputEdit.removeAttribute("readonly", true);
+        inputEdit.removeAttribute("disabled");
+        inputEdit.classList.add("border-1");
+        inputEdit.focus();
       } else {
+        editButton.focus();
+        editButtonIcon.setAttribute("class", "fas fa-edit");
+        editButton.classList.remove("btn-success");
+        editButton.classList.add("btn-primary");
+        inputEdit.focus();
         inputEdit.setAttribute("readonly", true);
+        inputEdit.setAttribute("disabled", true);
       }
-      console.log(inputEdit);
-      todos[index].value = inputEdit.value;
 
+      todos[index].value = inputEdit.value;
       saveDate();
-      console.log(inputEdit);
-      // if (span.contentEditable === "false") {
-      //   span.contentEditable = "true";
-      // } else {
-      //   span.contentEditable = "false";
-      // }
-      // if (span.innerText === "") {
-      //   span.innerText = "Enter the new item";
-      // }
-      // todos[index].value = span.innerText;
-      // saveDate();
-      // console.log(span);
-      // span.onmouseout = function () {
-      //   span.contentEditable = "false";
-      // };
     });
 
     todoList.appendChild(listItem);
